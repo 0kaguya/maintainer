@@ -29,12 +29,12 @@ function print-deleted-files
     git diff-tree -r --name-only --no-commit-id --diff-filter=D HEAD
 end
 
-function rsync_ignore_git
+function rsync-ignore-git
     # Print rsync parameters that exclude files that ignored by Git.
-    echo "--exclude='.git*' --filter=':- .gitignore'"
+    printf '%s\n' --exclude='.git*' --filter=':- .gitignore'
 end
 
-function scripts_dir
+function scripts-dir
     # Print this directory (usually .scripts/).
     set git_base "$(git rev-parse --show-toplevel)"
     realpath --relative-to="$git_base" "$(status dirname)"
