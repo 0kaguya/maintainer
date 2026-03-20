@@ -20,9 +20,7 @@ function get-service-name -a path
 end
 
 function print-commit-files
-    # Beware that deleted files are also included. This is for, e.g., updating
-    # systemd services for deleted overrides.
-    git diff-tree -r --name-only --no-commit-id HEAD
+    git diff-tree -r --name-only --no-commit-id --diff-filter=d HEAD
 end
 
 function print-deleted-files
