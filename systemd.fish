@@ -20,13 +20,13 @@ for path in (print-deleted-files | grep -e '\.service')
 end
 
 for path in (print-commit-files | grep -e '\.service')
-    if not set -q daemon-reloaded
+    if not set -q daemon_reloaded
         sudo systemctl daemon-reload ||
             begin
                 echo "Failed to reload systemd daemon." >&2
                 exit 1
             end
-        set -g daemon-reloaded 1
+        set -g daemon_reloaded 1
     end
 
     set -l service (get-service-name $path)
