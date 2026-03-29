@@ -10,12 +10,11 @@ else
 end
 
 function get-service-name -a path
-    set -l base "$(basename $path)"
-    if test "override.conf" = "$base"
-        # Of the shape `.../name.service.d/override.conf`.
-        basename -s ".d" $(dirname $path)
+    if string match '*.conf' (basename $path)
+        # Of the shape `.../*.service.d/*.conf`.
+        basename (dirname $path) .d
     else
-        echo $base
+        echo (basename $path)
     end
 end
 
@@ -36,4 +35,9 @@ function scripts-dir
     # Print this directory (usually .scripts/).
     set git_base "$(git rev-parse --show-toplevel)"
     realpath --relative-to="$git_base" "$(status dirname)"
+end
+
+function fail -a during
+    echo "Failed: $during" >&2
+    exit 1
 end

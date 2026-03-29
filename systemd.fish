@@ -5,11 +5,7 @@ source (status dirname)/maintainer.fish
 
 function ensure_daemon_reloaded
     if not set -q daemon_reloaded
-        sudo systemctl daemon-reload ||
-            begin
-                echo "Failed to reload systemd daemon." >&2
-                exit 1
-            end
+        sudo systemctl daemon-reload || fail daemon-reload
         set -g daemon_reloaded 1
     end
 end
